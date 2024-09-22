@@ -1,14 +1,24 @@
 // utilities function
 function getValueById(id) {
-    const value = document.getElementById(id).value;
+    const value = parseFloat(document.getElementById(id).value);
     return value
 }
 
+function toggleClass(id, removeId, removeHidden, addHidden) {
+    document.getElementById(id).classList.add("bg-gradient-to-r", "from-blue-500", "to-purple-600", "text-white");
+    document.getElementById(removeId).classList.remove("bg-gradient-to-r", "from-blue-500", "to-purple-600", "text-white");
+    document.getElementById(removeId).classList.add("text-gray-600");
+
+    document.getElementById(removeHidden).classList.remove("hidden")
+    document.getElementById(addHidden).classList.add("hidden")
+}
+
+// calculation button activity
 document.getElementById("calculate").addEventListener("click", () => {
-    let income = parseFloat(getValueById("income"));
-    let software = parseFloat(getValueById("software"));
-    let courses = parseFloat(getValueById("courses"));
-    let internet = parseFloat(getValueById("internet"));
+    let income = getValueById("income");
+    let software = getValueById("software");
+    let courses = getValueById("courses");
+    let internet = getValueById("internet");
 
 
     const totalExpenses = software + courses + internet;
@@ -16,14 +26,21 @@ document.getElementById("calculate").addEventListener("click", () => {
     const balance = income - totalExpenses;
     document.getElementById("balance").innerText = balance;
 
-    // console.log(new Date().toLocaleDateString());
-
+    // saving button activtiy
     document.getElementById("calculate-savings").addEventListener("click", () => {
         const savingsVal = parseFloat(getValueById("savings"));
-        const savings = balance * savingsVal / 100;
-        document.getElementById("savings-amount").innerText = savings;
-        const remainingBalance = balance - savings
-        document.getElementById("remaining-balance").innerText = remainingBalance;
+        if (savingsVal > 0 && savingsVal < 100) {
+            const savings = balance * savingsVal / 100;
+            document.getElementById("savings-amount").innerText = savings;
+            const remainingBalance = balance - savings
+            document.getElementById("remaining-balance").innerText = remainingBalance;
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "⚠️ Total expenses cannot exceed your income!",
+              });
+        }
     });
 
     const divEl = document.createElement("div");
@@ -35,30 +52,68 @@ document.getElementById("calculate").addEventListener("click", () => {
             <p class="text-xs text-gray-600">Balance: ${balance}</p>
     `;
     const historyList = document.getElementById("history-list")
-    
+
     historyList.append(divEl);
 
     document.getElementById("results").classList.remove("hidden");
 
-    
+
 });
 
 // history tab click activity
 document.getElementById("history-tab").addEventListener("click", (event) => {
-    event.target.classList.add("bg-gradient-to-r", "from-blue-500", "to-purple-600", "text-white");
-    document.getElementById("assistant-tab").classList.remove("bg-gradient-to-r", "from-blue-500", "to-purple-600", "text-white");
-    document.getElementById("assistant-tab").classList.add("text-gray-600");
-
-    document.getElementById("expense-form").classList.add("hidden")
-    document.getElementById("history-section").classList.remove("hidden")
-})
+    toggleClass("history-tab", "assistant-tab", "history-section", "expense-form");
+});
 
 // assistant tab click activity
 document.getElementById("assistant-tab").addEventListener("click", (event) => {
-    event.target.classList.add("bg-gradient-to-r", "from-blue-500", "to-purple-600", "text-white");
-    document.getElementById("history-tab").classList.remove("bg-gradient-to-r", "from-blue-500", "to-purple-600", "text-white");
-    document.getElementById("history-tab").classList.add("text-gray-600");
+    toggleClass("assistant-tab", "history-tab", "expense-form", "history-section");
+});
 
-    document.getElementById("expense-form").classList.remove("hidden")
-    document.getElementById("history-section").classList.add("hidden")
-})
+
+
+
+/**
+document.getElementById("income").addEventListener("input", (event) => {
+    const inputValue = parseFloat(event.target.value);
+    if (isNaN(inputValue) || inputValue < 0) {
+        document.getElementById("income-error").classList.remove("hidden");
+    } else {
+        document.getElementById("income-error").classList.add("hidden");
+    }
+    
+});
+document.getElementById("software").addEventListener("input", (event) => {
+    const inputValue = parseFloat(event.target.value);
+    if (isNaN(inputValue) || inputValue < 0) {
+        document.getElementById("software-error").classList.remove("hidden");
+    } else {
+        document.getElementById("software-error").classList.add("hidden");
+    }
+    
+});
+document.getElementById("courses").addEventListener("input", (event) => {
+    const inputValue = parseFloat(event.target.value);
+    if (isNaN(inputValue) || inputValue < 0) {
+        document.getElementById("courses-error").classList.remove("hidden");
+    } else {
+        document.getElementById("courses-error").classList.add("hidden");
+    }
+    
+});
+document.getElementById("internet").addEventListener("input", () => {
+    error("internet");
+    
+    
+});
+
+function error(id) {
+    const inputValue = parseFloat(document.getElementById(id).value)
+    if (isNaN(inputValue) || inputValue < 0) {
+        return document.getElementById(id).classList.remove("hidden");
+    } else {
+        return document.getElementById(id).classList.add("hidden");
+    }
+
+}
+ */

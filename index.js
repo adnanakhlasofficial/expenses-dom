@@ -22,6 +22,8 @@ document.getElementById("calculate").addEventListener("click", () => {
         const savingsVal = parseFloat(getValueById("savings"));
         const savings = balance * savingsVal / 100;
         document.getElementById("savings-amount").innerText = savings;
+        const remainingBalance = balance - savings
+        document.getElementById("remaining-balance").innerText = remainingBalance;
     });
 
     const divEl = document.createElement("div");
@@ -41,15 +43,22 @@ document.getElementById("calculate").addEventListener("click", () => {
     
 });
 
-
+// history tab click activity
 document.getElementById("history-tab").addEventListener("click", (event) => {
     event.target.classList.add("bg-gradient-to-r", "from-blue-500", "to-purple-600", "text-white");
     document.getElementById("assistant-tab").classList.remove("bg-gradient-to-r", "from-blue-500", "to-purple-600", "text-white");
     document.getElementById("assistant-tab").classList.add("text-gray-600");
+
+    document.getElementById("expense-form").classList.add("hidden")
+    document.getElementById("history-section").classList.remove("hidden")
 })
 
+// assistant tab click activity
 document.getElementById("assistant-tab").addEventListener("click", (event) => {
     event.target.classList.add("bg-gradient-to-r", "from-blue-500", "to-purple-600", "text-white");
     document.getElementById("history-tab").classList.remove("bg-gradient-to-r", "from-blue-500", "to-purple-600", "text-white");
     document.getElementById("history-tab").classList.add("text-gray-600");
+
+    document.getElementById("expense-form").classList.remove("hidden")
+    document.getElementById("history-section").classList.add("hidden")
 })

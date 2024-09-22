@@ -41,3 +41,15 @@ document.getElementById("calculate").addEventListener("click", () => {
     
 });
 
+
+document.getElementById("history-tab").addEventListener("click", (event) => {
+    event.target.classList.add("bg-gradient-to-r", "from-blue-500", "to-purple-600", "text-white");
+    document.getElementById("assistant-tab").classList.remove("bg-gradient-to-r", "from-blue-500", "to-purple-600", "text-white");
+    document.getElementById("assistant-tab").classList.add("text-gray-600");
+})
+
+document.getElementById("assistant-tab").addEventListener("click", (event) => {
+    event.target.classList.add("bg-gradient-to-r", "from-blue-500", "to-purple-600", "text-white");
+    document.getElementById("history-tab").classList.remove("bg-gradient-to-r", "from-blue-500", "to-purple-600", "text-white");
+    document.getElementById("history-tab").classList.add("text-gray-600");
+})

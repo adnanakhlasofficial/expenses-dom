@@ -13,13 +13,24 @@ function toggleClass(id, removeId, removeHidden, addHidden) {
     document.getElementById(addHidden).classList.add("hidden")
 }
 
+function error(id, error) {
+    const inputValue = parseFloat(document.getElementById(id).value)
+    if (isNaN(inputValue) || inputValue < 0) {
+        return document.getElementById(error).classList.remove("hidden");
+    } else {
+        return document.getElementById(error).classList.add("hidden");
+    }
+}
+
 // calculation button activity
+
 document.getElementById("calculate").addEventListener("click", () => {
     let income = getValueById("income");
     let software = getValueById("software");
     let courses = getValueById("courses");
     let internet = getValueById("internet");
-
+    console.log(income, software, courses, internet);
+    
 
     const totalExpenses = software + courses + internet;
     document.getElementById("total-expenses").innerText = totalExpenses
@@ -70,50 +81,18 @@ document.getElementById("assistant-tab").addEventListener("click", (event) => {
     toggleClass("assistant-tab", "history-tab", "expense-form", "history-section");
 });
 
-
-
-
-/**
 document.getElementById("income").addEventListener("input", (event) => {
-    const inputValue = parseFloat(event.target.value);
-    if (isNaN(inputValue) || inputValue < 0) {
-        document.getElementById("income-error").classList.remove("hidden");
-    } else {
-        document.getElementById("income-error").classList.add("hidden");
-    }
-    
+    error("income", "income-error");
 });
 document.getElementById("software").addEventListener("input", (event) => {
-    const inputValue = parseFloat(event.target.value);
-    if (isNaN(inputValue) || inputValue < 0) {
-        document.getElementById("software-error").classList.remove("hidden");
-    } else {
-        document.getElementById("software-error").classList.add("hidden");
-    }
-    
+    error("software", "software-error");
 });
 document.getElementById("courses").addEventListener("input", (event) => {
-    const inputValue = parseFloat(event.target.value);
-    if (isNaN(inputValue) || inputValue < 0) {
-        document.getElementById("courses-error").classList.remove("hidden");
-    } else {
-        document.getElementById("courses-error").classList.add("hidden");
-    }
+    error("courses", "courses-error");
     
 });
+
 document.getElementById("internet").addEventListener("input", () => {
-    error("internet");
-    
-    
+    error("internet", "internet-error");
 });
 
-function error(id) {
-    const inputValue = parseFloat(document.getElementById(id).value)
-    if (isNaN(inputValue) || inputValue < 0) {
-        return document.getElementById(id).classList.remove("hidden");
-    } else {
-        return document.getElementById(id).classList.add("hidden");
-    }
-
-}
- */
